@@ -3,9 +3,9 @@
  * Ext.cs
  *
  * Some parts of this code are derived from Mono (http://www.mono-project.com):
- * - GetStatusDescription is derived from System.Net.HttpListenerResponse.cs
- * - IsPredefinedScheme is derived from System.Uri.cs
- * - MaybeUri is derived from System.Uri.cs
+ * - GetStatusDescription is derived from HttpListenerResponse.cs (System.Net)
+ * - IsPredefinedScheme is derived from Uri.cs (System)
+ * - MaybeUri is derived from Uri.cs (System)
  *
  * The MIT License
  *
@@ -14,7 +14,7 @@
  * Copyright (c) 2003 Ben Maurer
  * Copyright (c) 2003, 2005, 2009 Novell, Inc. (http://www.novell.com)
  * Copyright (c) 2009 Stephane Delcroix
- * Copyright (c) 2010-2014 sta.blockhead
+ * Copyright (c) 2010-2015 sta.blockhead
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -281,7 +281,7 @@ namespace WebSocketSharp
     internal static string CheckIfValidControlData (this byte[] data, string paramName)
     {
       return data.Length > 125
-             ? String.Format ("'{0}' is greater than the allowable max size.", paramName)
+             ? String.Format ("'{0}' has greater than the allowable max size.", paramName)
              : null;
     }
 
@@ -633,16 +633,6 @@ namespace WebSocketSharp
              code == CloseStatusCode.NoStatusCode ||
              code == CloseStatusCode.Abnormal ||
              code == CloseStatusCode.TlsHandshakeFailure;
-    }
-
-    internal static bool IsSendable (this ushort code)
-    {
-      return !code.IsReserved () || code.IsNoStatusCode ();
-    }
-
-    internal static bool IsSendable (this CloseStatusCode code)
-    {
-      return !code.IsReserved () || code.IsNoStatusCode ();
     }
 
     internal static bool IsText (this string value)
